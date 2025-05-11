@@ -1,0 +1,220 @@
+http-listener:
+  enabled: true
+  host: localhost
+  port: 8081
+https-listener:
+  enabled: false
+ajp-listener:
+  enabled: false
+  host: localhost
+  port: 8009
+tokenBasicAuthMechanism:
+  enabled: false
+basicAuthMechanism:
+  enabled: true
+  authenticator: mongoRealmAuthenticator
+jwtAuthenticationMechanism:
+  enabled: false
+  algorithm: HS256
+  key: secret
+  base64Encoded: false
+  usernameClaim: sub
+  rolesClaim: roles
+  fixedRoles: []
+  issuer: restheart.org
+  audience: null
+digestAuthMechanism:
+  enabled: false
+  realm: RESTHeart Realm
+  domain: localhost
+  authenticator: mongoRealmAuthenticator
+identityAuthMechanism:
+  enabled: false
+  username: admin
+  roles:
+  - admin
+  - user
+fileRealmAuthenticator:
+  enabled: false
+  users:
+  - userid: admin
+    password: null
+    roles:
+    - admin
+mongoRealmAuthenticator:
+  enabled: true
+  users-db: restheart
+  users-collection: users
+  prop-id: _id
+  prop-password: password
+  json-path-roles: $.roles
+  bcrypt-hashed-password: true
+  bcrypt-complexity: 12
+  enforce-minimum-password-strength: false
+  minimum-password-strength: 3
+  create-user: true
+  create-user-document: '{"_id": "admin", "password": "$2a$12$lZiMMNJ6pkyg4uq/I1cF5uxzUbU25aXHtg7W7sD2ED7DG1wzUoo6u", "roles": ["admin"]}'
+  cache-enabled: false
+  cache-size: 1000
+  cache-ttl: 60000
+  cache-expire-policy: AFTER_WRITE
+authCookieSetter:
+  enabled: false
+  name: rh_auth
+  domain: localhost
+  path: /
+  http-only: true
+  same-site: true
+  same-site-mode: strict
+  expires-ttl: 86400
+authCookieHandler:
+  enabled: false
+authCookieRemover:
+  enabled: false
+  secure: false
+  defaultUri: /logout
+fileAclAuthorizer:
+  enabled: false
+  permissions:
+  - role: admin
+    predicate: path-prefix('/')
+    priority: 0
+mongoAclAuthorizer:
+  enabled: true
+  acl-db: restheart
+  acl-collection: acl
+  root-role: admin
+  cache-enabled: true
+  cache-size: 1000
+  cache-ttl: 5000
+  cache-expire-policy: AFTER_WRITE
+originVetoer:
+  enabled: false
+  whitelist:
+  - https://restheart.org
+  - http://localhost
+fullAuthorizer:
+  enabled: false
+  authentication-required: true
+rndTokenManager:
+  enabled: true
+  ttl: 15
+  srv-uri: /tokens
+jwtTokenManager:
+  enabled: false
+  key: secret
+  ttl: 15
+  srv-uri: /tokens
+  issuer: restheart.org
+  audience: null
+  account-properties-claims: null
+mclient:
+  connection-string: mongodb://127.0.0.1
+mongo:
+  enabled: true
+  uri: /
+  mongo-mounts:
+  - what: /restheart
+    where: /
+  default-representation-format: STANDARD
+  etag-check-policy:
+    db: REQUIRED_FOR_DELETE
+    coll: REQUIRED_FOR_DELETE
+    doc: OPTIONAL
+  get-collection-cache-enabled: true
+  get-collection-cache-size: 100
+  get-collection-cache-ttl: 10000
+  get-collection-cache-docs: 1000
+  aggregation-check-operators: true
+  default-pagesize: 100
+  max-pagesize: 1000
+  local-cache-enabled: true
+  local-cache-ttl: 60000
+  schema-cache-enabled: true
+  schema-cache-ttl: 60000
+  query-time-limit: 0
+  aggregation-time-limit: 0
+graphql:
+  uri: /graphql
+  db: restheart
+  collection: gql-apps
+  app-cache-enabled: true
+  app-cache-ttr: 60000
+  default-limit: 100
+  max-limit: 1000
+  query-time-limit: 0
+  verbose: false
+proxies: null
+static-resources: null
+authTokenService:
+  uri: /tokens
+ping:
+  enabled: true
+  msg: Greetings from RESTHeart!
+  enable-extended-response: true
+roles:
+  uri: /roles
+filterOperatorsBlacklist:
+  blacklist:
+  - $where
+  enabled: true
+bruteForceAttackGuard:
+  enabled: false
+  max-failed-attempts: 5
+  trust-x-forwarded-for: false
+  x-forwarded-for-value-from-last-element: 0
+xPoweredBy:
+  enabled: true
+dateHeader:
+  enabled: true
+logging:
+  log-level: INFO
+  log-to-console: true
+  ansi-console: true
+  log-to-file: false
+  log-file-path: restheart.log
+  packages:
+  - org.restheart
+  - com.restheart
+  full-stacktrace: false
+  requests-log-mode: 1
+  tracing-headers: null
+metrics:
+  enabled: true
+  uri: /metrics
+requestsMetricsCollector:
+  enabled: false
+  include:
+  - /*
+  exclude:
+  - /metrics
+  - /metrics/*
+jvmMetricsCollector:
+  enabled: false
+core:
+  name: default
+  plugins-directory: plugins
+  plugins-packages: []
+  plugins-scanning-verbose: false
+  base-url: null
+  io-threads: 0
+  workers-scheduler-parallelism: 0
+  workers-scheduler-max-pool-size: 256
+  buffers-pooling: true
+  buffer-size: 16364
+  direct-buffers: true
+  force-gzip-encoding: false
+  allow-unescaped-characters-in-url: true
+connection-options:
+  ENABLE_HTTP2: true
+  MAX_HEADER_SIZE: 1048576
+  MAX_ENTITY_SIZE: -1
+  MULTIPART_MAX_ENTITY_SIZE: -1
+  IDLE_TIMEOUT: -1
+  REQUEST_PARSE_TIMEOUT: -1
+  NO_REQUEST_TIMEOUT: -1
+  MAX_PARAMETERS: 1000
+  MAX_HEADERS: 200
+  MAX_COOKIES: 200
+  URL_CHARSET: UTF-8
+  ALWAYS_SET_KEEP_ALIVE: true
