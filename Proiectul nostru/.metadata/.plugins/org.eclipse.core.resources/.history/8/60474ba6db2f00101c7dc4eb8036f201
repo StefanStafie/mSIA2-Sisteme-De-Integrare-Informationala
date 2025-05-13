@@ -1,0 +1,27 @@
+package org.datasource.oracle;
+
+
+import lombok.Value;
+
+@Value
+public class OracleLevelView {
+	private String PositionName;
+	private int PositionId;
+	public String getPositionName() {
+		return PositionName;
+	}
+	public void setPositionName(String positionName) {
+		PositionName = positionName;
+	}
+	public int getPositionId() {
+		return PositionId;
+	}
+	public void setPositionId(int positionId) {
+		PositionId = positionId;
+	}
+	public OracleLevelView(String positionName, int positionId) {
+		super();
+		PositionName = positionName;
+		PositionId = positionId;
+	}
+}

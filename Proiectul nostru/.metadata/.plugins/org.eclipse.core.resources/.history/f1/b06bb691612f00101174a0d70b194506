@@ -1,0 +1,41 @@
+package org.datasource.oracle;
+
+import lombok.Value;
+
+@Value
+public class SalaryDetailsView {
+    private String Location;
+    private Integer MeanSalary;
+    private Integer NumberOfJobs;
+    
+	public String getLocation() {
+		return Location;
+	}
+
+	public void setLocation(String location) {
+		Location = location;
+	}
+
+	public Integer getMeanSalary() {
+		return MeanSalary;
+	}
+
+	public void setMeanSalary(Integer meanSalary) {
+		MeanSalary = meanSalary;
+	}
+
+	public Integer getNumberOfJobs() {
+		return NumberOfJobs;
+	}
+
+	public void setNumberOfJobs(Integer numberOfJobs) {
+		NumberOfJobs = numberOfJobs;
+	}
+
+	public SalaryDetailsView(String location, Integer meanSalary, Integer numberOfJobs) {
+		super();
+		Location = location;
+		MeanSalary = meanSalary;
+		NumberOfJobs = numberOfJobs;
+	}
+}

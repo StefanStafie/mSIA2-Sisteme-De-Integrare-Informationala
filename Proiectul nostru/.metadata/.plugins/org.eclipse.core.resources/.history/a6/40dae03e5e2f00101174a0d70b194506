@@ -1,0 +1,16 @@
+package org.datasource.jdbc.views.customerdetails;
+
+import lombok.Value;
+
+@Value
+public class SalaryDetailsView {
+    private String Location;
+    private Integer MeanSalary;
+    private Integer NumberOfJobs;
+	public SalaryDetailsView(String location, Integer meanSalary, Integer numberOfJobs) {
+		super();
+		Location = location;
+		MeanSalary = meanSalary;
+		NumberOfJobs = numberOfJobs;
+	}
+}

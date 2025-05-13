@@ -1,0 +1,55 @@
+package org.datasource.jdbc.views.customers;
+
+import org.datasource.jdbc.PostgresDataSourceConnector;
+import org.springframework.stereotype.Service;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class CustomerViewBuilder {
+	// SQL Map
+	private String SQL_CUSTOMERS_SELECT = "SELECT cust_id, name, registration_code FROM customers";
+
+	// DataCache
+	private List<CustomerView> customersViewList = new ArrayList<>();
+
+	public List<CustomerView> getViewList() {
+		// building workflow
+		// this.build().filter().getViewList();
+		return this.customersViewList;
+	}
+
+	// building steps
+	public CustomerViewBuilder build() {
+		try (Connection jdbcConnection = jdbcConnector.getConnection()) {
+			// extract data
+			Statement selectStmt = jdbcConnection.createStatement();
+			ResultSet rs = selectStmt.executeQuery(SQL_CUSTOMERS_SELECT);
+
+			// map data to EntityView
+			customersViewList = new ArrayList<>();
+			while (rs.next()) {
+				Integer cust_id = rs.getInt("cust_id");
+				String name = rs.getString("name");
+				String registration_code = rs.getString("registration_code").trim();
+				this.customersViewList.add(new CustomerView(cust_id, name, registration_code));
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return this;
+	}
+
+	/* JDBC Session Management ---------------------------------------- */
+	private PostgresDataSourceConnector jdbcConnector;
+
+	public CustomerViewBuilder(PostgresDataSourceConnector jdbcConnector) {
+		this.jdbcConnector = jdbcConnector;
+	}
+}

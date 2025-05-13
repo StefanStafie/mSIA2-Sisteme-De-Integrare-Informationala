@@ -1,0 +1,52 @@
+package org.datasource.jdbc.views.customerdetails;
+
+import org.datasource.jdbc.PostgresDataSourceConnector;
+import org.springframework.stereotype.Service;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class SalaryDetailsViewBuilder {
+	// SQL Map
+	private String SQL_SALARIES_DETAILS_SELECT =
+			"SELECT * FROM \"Salaries\"";
+
+	// DataCache
+	private List<SalaryDetailsView> salaryDetailsViewList = new ArrayList<>();
+
+	public List<SalaryDetailsView> getViewList() {
+		return this.salaryDetailsViewList;
+	}
+
+	// building steps
+	public SalaryDetailsViewBuilder build() {
+		try (Connection jdbcConnection = jdbcConnector.getConnection()) {
+			Statement selectStmt = jdbcConnection.createStatement();
+			ResultSet rs = selectStmt.executeQuery(SQL_SALARIES_DETAILS_SELECT);
+
+			salaryDetailsViewList = new ArrayList<>();
+			while (rs.next()) {
+				String cust_id = rs.getString("Location");
+				Integer credit_rating = rs.getInt("Mean Salary");
+				Integer industry = rs.getInt("NumberOfJobs");
+				this.salaryDetailsViewList.add(new SalaryDetailsView(cust_id, credit_rating, industry,
+						age, turnover, nr_of_emps, comp_type));
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return this;
+	}
+
+	/* JDBC Session Management ---------------------------------------- */
+	private PostgresDataSourceConnector jdbcConnector;
+	public SalaryDetailsViewBuilder(PostgresDataSourceConnector jdbcConnector) {
+		this.jdbcConnector = jdbcConnector;
+	}
+}

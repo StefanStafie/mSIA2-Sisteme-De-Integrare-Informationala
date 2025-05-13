@@ -1,0 +1,65 @@
+package org.datasource.mongodb.views;
+
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@JsonIgnoreProperties("none")
+@Data @AllArgsConstructor @NoArgsConstructor(force = true)
+public class SalaryUkraine implements Serializable{
+	private Long _id;
+	private String city;
+	private String experience;
+	private int freq;
+	private String position;
+	public Long get_id() {
+		return _id;
+	}
+	public void set_id(Long _id) {
+		this._id = _id;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getExperience() {
+		return experience;
+	}
+	public void setExperience(String experience) {
+		this.experience = experience;
+	}
+	public int getFreq() {
+		return freq;
+	}
+	public void setFreq(int freq) {
+		this.freq = freq;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public int getSalary() {
+		return salary;
+	}
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
+	public String getTech() {
+		return tech;
+	}
+	public void setTech(String tech) {
+		this.tech = tech;
+	}
+	private int salary;
+	private String tech;
+}
+
+

@@ -1,0 +1,11 @@
+package org.datasource.mongodb.views;
+
+
+import lombok.Value;
+
+@Value
+public class SalariesPostgres {
+	private Integer customerId;
+	private String name;
+	private String registrationcode;
+}

@@ -1,0 +1,33 @@
+package org.Reports;
+
+import java.util.ArrayList;
+
+import com.sun.tools.javac.util.List;
+
+public class SalaryDistributionReport {
+	
+	public void calculateDistributionReport(ArrayList<Integer> salaries1, ArrayList<Integer> salaries2, ArrayList<Integer> salaries3) {
+		ArrayList<Integer> allSalaries = new ArrayList<>();
+        allSalaries.addAll(salaries1);
+        allSalaries.addAll(salaries2);
+        allSalaries.addAll(salaries3);
+
+        return computeDistribution(allSalaries);
+    }
+
+    private List<Integer> computeDistribution(List<Double> salaries) {
+        Collections.sort(salaries);
+        double min = salaries.get(0);
+        double max = salaries.get(salaries.size() - 1);
+        double avg = salaries.stream().mapToDouble(d -> d).average().orElse(0);
+        double median = salaries.get(salaries.size() / 2);
+
+        Map<String, Long> histogram = salaries.stream()
+            .collect(Collectors.groupingBy(s -> {
+                int bin = (int)(s / 1000); // bins of 1000
+                return String.format("%dk-%dk", bin, bin+1);
+            }, Collectors.counting()));
+
+        return new SalaryDistributionReport(min, max, avg, median, histogram);
+    }
+}

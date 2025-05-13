@@ -1,0 +1,92 @@
+package org.Reports;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+
+public class SalaryDistributionReport {
+	
+	private Map<String, Long> histogram;
+	public Map<String, Long> getHistogram() {
+		return histogram;
+	}
+
+	public void setHistogram(Map<String, Long> histogram) {
+		this.histogram = histogram;
+	}
+
+	public double getMedian() {
+		return median;
+	}
+
+	@Override
+	public String toString() {
+		return "SalaryDistributionReport [histogram=" + histogram + ", median=" + median + ", avg=" + avg + ", min="
+				+ min + ", max=" + max + "]";
+	}
+
+	public void setMedian(double median) {
+		this.median = median;
+	}
+
+	public double getAvg() {
+		return avg;
+	}
+
+	public void setAvg(double avg) {
+		this.avg = avg;
+	}
+
+	public double getMin() {
+		return min;
+	}
+
+	public void setMin(double min) {
+		this.min = min;
+	}
+
+	public double getMax() {
+		return max;
+	}
+
+	public void setMax(double max) {
+		this.max = max;
+	}
+
+	private double median;
+	private double avg;
+	private double min;
+	private double max;
+
+	public SalaryDistributionReport(List<Integer> postgresSalaryView, List<Integer> mongoSalaryView, List<Integer> oracleSalaryView) {
+		ArrayList<Integer> salaries = new ArrayList<>();
+        salaries.addAll(postgresSalaryView);
+        salaries.addAll(mongoSalaryView);
+        salaries.addAll(oracleSalaryView);
+        salaries.removeIf(Objects::isNull);
+
+        Collections.sort(salaries);
+        double min = salaries.get(0);
+        double max = salaries.get(salaries.size() - 1);
+        double avg = salaries.stream().mapToDouble(d -> d).average().orElse(0);
+        double median = salaries.get(salaries.size() / 2);
+
+        Map<String, Long> histogram = salaries.stream()
+            .collect(Collectors.groupingBy(s -> {
+                int bin = (int)(s / 100); // bins of 100
+                return String.format("%dk-%dk", bin, bin+1);
+            }, Collectors.counting()));
+
+        
+        this.max = max;
+        this.min = min;
+        this.avg = avg;
+        this.median = median;
+        this.histogram = histogram;
+    }
+
+}

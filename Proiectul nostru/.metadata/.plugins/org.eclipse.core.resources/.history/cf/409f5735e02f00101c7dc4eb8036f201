@@ -1,0 +1,120 @@
+package org.datasource.oracle;
+
+import org.springframework.stereotype.Service;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class OracleViewBuilder {
+	// SQL Map
+	private String SQL_POSITION_SELECT =
+			"SELECT * FROM MYUSER.POSITION";
+	
+	private String SQL_WAY_OF_WORKING_SELECT =
+			"SELECT * FROM MYUSER.WAYOFWORKING";
+	
+	private String SQL_LEVEL_SELECT =
+			"SELECT * FROM MYUSER.CLEVEL";
+	
+	private String SQL_SALARY_SELECT =
+			"SELECT * FROM MYUSER.SALARY";
+
+	// DataCache
+	private List<OraclePositionView> positionViewList = new ArrayList<>();
+	private List<OracleLevelView> levelViewList = new ArrayList<>();
+	private List<OracleWayOfWorkingView> wayOfWorkingViewList = new ArrayList<>();
+	private List<OracleSalaryView> salaryViewList = new ArrayList<>();
+
+	public List<OraclePositionView> getPositionViewList() {
+		return this.positionViewList;
+	}
+	
+	public List<OracleLevelView> getLevelViewList() {
+		return this.levelViewList;
+	}
+	
+	public List<OracleSalaryView> getSalaryViewList() {
+		return this.salaryViewList;
+	}
+	
+	public List<OracleWayOfWorkingView> getwayOfWorkingViewList() {
+		return this.wayOfWorkingViewList;
+	}
+	
+	// building steps
+	public OracleViewBuilder build(String nameOfTable) {
+		try (Connection jdbcConnection = jdbcConnector.getConnection()) {
+			Statement selectStmt = jdbcConnection.createStatement();
+			
+			switch(nameOfTable) {
+				case "Position":
+					ResultSet rs = selectStmt.executeQuery(SQL_POSITION_SELECT);
+	
+					positionViewList = new ArrayList<>();
+					while (rs.next()) {
+						Integer positionId = rs.getInt("PositionId");
+						String positionName = rs.getString("PositionName");
+						this.positionViewList.add(new OraclePositionView(positionName, positionId));
+					}
+				break;
+				
+				case "Level":
+					rs = selectStmt.executeQuery(SQL_POSITION_SELECT);
+	
+					levelViewList = new ArrayList<>();
+					while (rs.next()) {
+						Integer levelId = rs.getInt("LevelId");
+						String levelName = rs.getString("PositionName");
+						this.levelViewList.add(new OracleLevelView(levelName, levelId));
+					}
+				break;
+				
+				case "WayOfWorking":
+					rs = selectStmt.executeQuery(SQL_POSITION_SELECT);
+	
+					wayOfWorkingViewList = new ArrayList<>();
+					while (rs.next()) {
+						Integer wayId = rs.getInt("WayId");
+						String wayType = rs.getString("WayType");
+						this.wayOfWorkingViewList.add(new OracleWayOfWorkingView(wayType , wayId));
+					}
+				break;
+				
+				case "Salary":
+					rs = selectStmt.executeQuery(SQL_POSITION_SELECT);
+	
+					salaryViewList = new ArrayList<>();
+					while (rs.next()) {
+						Integer salaryId = rs.getInt("SalaryID");
+						String experience = rs.getString("Experience");
+						String technology = rs.getString("Technology");
+						String location = rs.getString("CLocation");
+						String employeesCount = rs.getString("Employees_Count");
+						String salaryType = rs.getString("SalaryType");
+						String salary = rs.getString("Salary");
+						Integer positionId = rs.getInt("PositionId");
+						Integer levelId = rs.getInt("LevelId");
+						Integer wayId = rs.getInt("WayId");
+						this.salaryViewList.add(new OracleSalaryView(salaryId, experience, technology, location, employeesCount, salaryType, salary, positionId, levelId, wayId));
+					}
+				break;
+			}			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return this;
+	}
+
+	/* JDBC Session Management ---------------------------------------- */
+	private OracleDataSourceConnector jdbcConnector;
+	public OracleViewBuilder() {
+		
+		this.jdbcConnector = new OracleDataSourceConnector();
+		
+	}
+}

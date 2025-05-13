@@ -1,0 +1,23 @@
+package org.datasource.mongodb.views.departamentscities;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.List;
+
+@JsonIgnoreProperties("none")
+@Data @AllArgsConstructor @NoArgsConstructor(force = true)
+public class SalariesUkraine implements Serializable{
+	private Long _id;
+	private String city;
+	private String experience;
+	private int freq;
+	private String position;
+	private int salary;
+	private String tech;
+}
+
+

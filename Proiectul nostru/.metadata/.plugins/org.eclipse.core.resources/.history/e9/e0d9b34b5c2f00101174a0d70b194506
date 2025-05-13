@@ -1,0 +1,10 @@
+package 
+
+import lombok.Value;
+
+@Value
+public class SalariesPostgres {
+	private String Location;
+	private int MeanSalary;
+	private int NumberOfJobs;
+}

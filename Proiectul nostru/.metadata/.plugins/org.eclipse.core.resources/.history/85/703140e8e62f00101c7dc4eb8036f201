@@ -1,0 +1,43 @@
+package org.Reports;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+
+public class SalaryDistributionReport {
+	
+	private Map<String, Long> histogram;
+	private double median;
+	private double avg;
+	private double min;
+	private double max;
+
+	public void calculateDistributionReport(ArrayList<Integer> salaries1, ArrayList<Integer> salaries2, ArrayList<Integer> salaries3) {
+		ArrayList<Integer> salaries = new ArrayList<>();
+        salaries.addAll(salaries1);
+        salaries.addAll(salaries2);
+        salaries.addAll(salaries3);
+        
+        Collections.sort(salaries);
+        double min = salaries.get(0);
+        double max = salaries.get(salaries.size() - 1);
+        double avg = salaries.stream().mapToDouble(d -> d).average().orElse(0);
+        double median = salaries.get(salaries.size() / 2);
+
+        Map<String, Long> histogram = salaries.stream()
+            .collect(Collectors.groupingBy(s -> {
+                int bin = (int)(s / 1000); // bins of 1000
+                return String.format("%dk-%dk", bin, bin+1);
+            }, Collectors.counting()));
+
+        
+        this.max = max;
+        this.min = min;
+        this.avg = avg;
+        this.median = median;
+        this.histogram = histogram;
+    }
+
+}

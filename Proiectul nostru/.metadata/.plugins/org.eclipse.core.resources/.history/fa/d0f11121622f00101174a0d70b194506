@@ -1,0 +1,56 @@
+package org.datasource.oracle;
+
+import org.datasource.JDBCDataSourceConnector;
+import org.springframework.stereotype.Service;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class OracleViewBuilder {
+	// SQL Map
+	private String SQL_SALARIES_DETAILS_SELECT =
+			"SELECT * FROM \"Salaries\"";
+
+	// DataCache
+	private List<OraclePositionView> positionViewList = new ArrayList<>();
+
+	public List<OraclePositionView> getPositionViewList() {
+		return this.positionViewList;
+	}
+	
+	public List<OraclePositionView> getViewList() {
+		return this.positionViewList;
+	}
+	
+	// building steps
+	public OracleViewBuilder build() {
+		try (Connection jdbcConnection = jdbcConnector.getConnection()) {
+			Statement selectStmt = jdbcConnection.createStatement();
+			ResultSet rs = selectStmt.executeQuery(SQL_SALARIES_DETAILS_SELECT);
+
+			positionViewList = new ArrayList<>();
+			while (rs.next()) {
+				Integer positionId = rs.getInt("PositionId");
+				String positionName = rs.getString("PositionName");
+				this.positionViewList.add(new OraclePositionView(positionName, positionId));
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return this;
+	}
+
+	/* JDBC Session Management ---------------------------------------- */
+	private JDBCDataSourceConnector jdbcConnector;
+	public OracleViewBuilder() {
+		
+		this.jdbcConnector = new JDBCDataSourceConnector("jdbc:oracle:thin:@localhost:1521:orcl", "MYUSER", "password");
+		
+	}
+}

@@ -1,0 +1,101 @@
+package org.datasource;
+
+import org.datasource.mongodb.SalaryUkraine;
+import org.datasource.mongodb.SalaryViewBuilder;
+import org.datasource.oracle.OraclePositionView;
+import org.datasource.oracle.OracleViewBuilder;
+import org.datasource.postgres.SalaryDetailsView;
+import org.datasource.postgres.SalaryDetailsViewBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.logging.Logger;
+
+
+/*	REST Service URL
+	http://localhost:8093/DSA-NoSQL-MongoDBService/rest/ping
+	http://localhost:8093/DSA-NoSQL-MongoDBService/rest/mongo/salaries
+	http://localhost:8093/DSA-NoSQL-MongoDBService/rest/mongo/cities
+	http://localhost:8093/DSA-NoSQL-MongoDBService/rest/postgres/salaries
+	http://localhost:8093/DSA-NoSQL-MongoDBService/rest/oracle/position
+*/
+@RestController @RequestMapping("/")
+public class RESTViewService {
+	private static Logger logger = Logger.getLogger(RESTViewService.class.getName());
+	@Autowired
+	private SalaryViewBuilder viewBuilder;
+	@Autowired
+	private SalaryDetailsViewBuilder postgresViewBuilder;
+	@Autowired
+	private OracleViewBuilder oracleViewBuilder;
+	
+	@RequestMapping(value = "/ping", method = RequestMethod.GET,
+		produces = {MediaType.TEXT_PLAIN_VALUE})
+	@ResponseBody
+	public String pingDataSource() {
+		logger.info(">>>> org.datasource.rest.RESTViewService(JSON) is Up!");
+		return "Ping response from RESTViewServiceMongoDB!";
+	}
+	
+	@RequestMapping(value = "/mongo/salaries", method = RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@ResponseBody
+	public List<SalaryUkraine> getSalariesUkraine() throws Exception {
+		List<SalaryUkraine> viewList = this.viewBuilder.build().getSalariesViewList();
+		return viewList;
+	}
+	
+	@RequestMapping(value = "mongo/cities", method = RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@ResponseBody
+	public List<String> getCities() throws Exception {
+		List<String> viewList = this.viewBuilder.build().getCitiesViewList();
+		return viewList;
+	}
+	
+	@RequestMapping(value = "/postgres/salaries", method = RequestMethod.GET, 
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@ResponseBody
+	public List<SalaryDetailsView> getSalariesPostgres() {
+		List<SalaryDetailsView> viewList = this.postgresViewBuilder.build().getViewList();
+		return viewList;
+	}
+	
+	
+	@RequestMapping(value = "/oracle/position", method = RequestMethod.GET, 
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@ResponseBody
+	public List<OraclePositionView> getPositionsOracle() {
+		List<OraclePositionView> viewList = this.oracleViewBuilder.build("Position").getViewList();
+		return viewList;
+	}
+	
+	@RequestMapping(value = "/oracle/level", method = RequestMethod.GET, 
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@ResponseBody
+	public List<OraclePositionView> getSalariesOracle() {
+		List<OraclePositionView> viewList = this.oracleViewBuilder.build("Position").getViewList();
+		return viewList;
+	}
+	
+	@RequestMapping(value = "/oracle/wayofworking", method = RequestMethod.GET, 
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@ResponseBody
+	public List<OraclePositionView> getSalariesOracle() {
+		List<OraclePositionView> viewList = this.oracleViewBuilder.build("Position").getViewList();
+		return viewList;
+	}
+	
+	@RequestMapping(value = "/oracle/salary", method = RequestMethod.GET, 
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@ResponseBody
+	public List<OraclePositionView> getSalariesOracle() {
+		List<OraclePositionView> viewList = this.oracleViewBuilder.build("Position").getViewList();
+		return viewList;
+	}
+}

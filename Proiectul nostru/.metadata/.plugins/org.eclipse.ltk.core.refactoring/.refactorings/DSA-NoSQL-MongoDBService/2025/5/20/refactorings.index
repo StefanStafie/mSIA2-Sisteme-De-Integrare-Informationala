@@ -1,0 +1,63 @@
+1747069962844	Rename type 'DepartamentView'
+1747070000074	Delete elements
+1747070016725	Rename type 'Salaries'
+1747070362916	Rename type 'SalariesUkraine'
+1747070379196	Rename type 'DepartamentViewBuilder'
+1747070425272	Rename field 'citiesViewList'
+1747070530678	Rename local variable 'departamentsCollection'
+1747070717441	Rename method 'getCitiesViewList'
+1747073294121	Copy compilation unit
+1747073438632	Rename type 'CustomerView'
+1747073835980	Rename type 'JDBCDataSourceConnector'
+1747073856030	Move compilation unit
+1747073916679	Delete element
+1747073934093	Rename type 'CustomerDetailsView'
+1747073951849	Rename type 'CustomerDetailsViewBuilder'
+1747074027246	Rename field 'customersDetailsViewList'
+1747074049955	Rename field 'SQL_CUSTOMERS_DETAILS_SELECT'
+1747074252210	Rename local variable 'cust_id'
+1747074261395	Rename local variable 'credit_rating'
+1747074272110	Rename local variable 'industry'
+1747074299750	Rename local variable 'mean_salary'
+1747074312089	Rename local variable 'numb_of_jobs'
+1747074434048	Rename method 'get_CustomerView'
+1747074500354	Delete element
+1747074506153	Delete element
+1747074551047	Rename package 'org.datasource.jdbc.views.customerdetails'
+1747074615143	Move compilation units
+1747074639423	Move compilation unit
+1747074648804	Move compilation units
+1747074658409	Delete element
+1747074670525	Rename package 'org.datasource.postgres.views'
+1747074682792	Delete element
+1747074719002	Delete element
+1747074729915	Delete element
+1747074785374	Rename type 'RESTViewServiceMongoDB'
+1747074802351	Rename type 'SpringBootNoSQLMongoDBService'
+1747074870525	Copy package
+1747074878855	Rename type 'PostgresDataSourceConnector'
+1747075279367	Delete element
+1747075287247	Move compilation unit
+1747075330838	Rename field 'salaryDetailsViewBuilder'
+1747075340681	Rename field 'salaryDetailsViewBuilder'
+1747075506730	Rename type 'SalaryDetailsViewBuilder'
+1747075640915	Delete element
+1747075655152	Delete element
+1747075686054	Rename type 'OraclePosition'
+1747075800962	Rename method 'getViewList'
+1747075910517	Rename field 'SQL_SALARIES_DETAILS_SELECT'
+1747076306811	Rename local variable 'dB_URL'
+1747076310505	Rename local variable 'uSER'
+1747076313945	Rename local variable 'pASS'
+1747127023954	Move compilation unit
+1747127032034	Rename type 'JDBCDataSourceConnector'
+1747127081103	Copy compilation unit
+1747127087586	Rename type 'OracleDataSourceConnector'
+1747127382539	Rename field 'oracleSalaryDetailsViewBuilder'
+1747127390696	Rename field 'postgresSalaryDetailsViewBuilder'
+1747127402952	Rename field 'viewBuilder'
+1747127608356	Copy compilation unit
+1747127622551	Copy compilation unit
+1747127630826	Copy compilation unit
+1747128780172	Rename local variable 'positionId'
+1747132882889	Rename local variable 'allSalaries'

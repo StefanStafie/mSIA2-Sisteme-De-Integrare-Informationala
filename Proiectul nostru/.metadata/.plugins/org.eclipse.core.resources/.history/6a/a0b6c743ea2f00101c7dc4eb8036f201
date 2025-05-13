@@ -1,0 +1,32 @@
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.springframework.stereotype.Service;
+
+import java.awt.image.BufferedImage;
+import java.util.Map;
+
+@Service
+public class ChartService {
+
+    public BufferedImage generateSalaryChart(Map<String, Long> histogram) {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        // Add histogram data to chart dataset
+        histogram.entrySet().stream()
+            .sorted(Map.Entry.comparingByKey()) // ensures bars appear in order
+            .forEach(entry -> dataset.addValue(entry.getValue(), "Salaries", entry.getKey()));
+
+        JFreeChart chart = ChartFactory.createBarChart(
+            "Salary Distribution",     // Chart title
+            "Salary Range",            // X-axis label
+            "Employees",               // Y-axis label
+            dataset,                   // Data
+            PlotOrientation.VERTICAL,
+            false, true, false         // Legend, tooltips, URLs
+        );
+
+        return chart.createBufferedImage(1000, 600); // You can change size
+    }
+}

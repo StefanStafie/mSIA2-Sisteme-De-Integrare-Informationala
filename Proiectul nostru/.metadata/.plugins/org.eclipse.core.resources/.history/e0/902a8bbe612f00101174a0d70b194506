@@ -1,0 +1,10 @@
+package org.datasource.oracle;
+
+
+import lombok.Value;
+
+@Value
+public class OraclePositionView {
+	private String PositionName;
+	private int PositionId;
+}

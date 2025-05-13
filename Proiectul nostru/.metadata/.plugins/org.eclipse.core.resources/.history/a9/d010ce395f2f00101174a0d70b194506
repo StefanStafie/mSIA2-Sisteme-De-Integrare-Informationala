@@ -1,0 +1,47 @@
+package org.datasource.mongodb.views;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.datasource.mongodb.MongoDataSourceConnector;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class SalaryViewBuilder {
+
+	// Data cache
+	
+	private List<SalaryUkraine> salariesViewList;
+	
+	public List<SalaryUkraine> getSalariesViewList() {
+		return salariesViewList;
+	}
+
+	//
+	private MongoDataSourceConnector dataSourceConnector;
+	
+	
+	public SalaryViewBuilder(MongoDataSourceConnector dataSourceConnector) {
+		this.dataSourceConnector = dataSourceConnector;
+	}
+
+	public SalaryViewBuilder build() throws Exception {
+		MongoDatabase db = dataSourceConnector.getMongoDatabase();
+
+		MongoCollection<SalaryUkraine> salariesCollection =
+				db.getCollection("SalariesUkraine", SalaryUkraine.class);
+		this.salariesViewList = salariesCollection.find().into(new ArrayList<SalaryUkraine>());
+		
+		return this;
+	}
+
+	public List<String> getCitiesViewList() {
+		return salariesViewList.stream()
+			    .map(SalaryUkraine::getCity) // assuming getCity() returns a String
+			    .distinct()
+			    .collect(Collectors.toList());
+	}
+}

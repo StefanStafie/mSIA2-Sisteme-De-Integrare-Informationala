@@ -1,0 +1,68 @@
+package org.datasource;
+
+import org.datasource.jdbc.views.customers.CustomerView;
+//import org.datasource.mongodb.views.locations.CityView;
+//import org.datasource.mongodb.views.locations.DepartamentView;
+//import org.datasource.mongodb.views.locations.DepartamentViewBuilder;
+//import org.datasource.mongodb.views.locations.DepartamentsView;
+import org.datasource.mongodb.views.SalaryUkraine;
+import org.datasource.mongodb.views.SalaryViewBuilder;
+import org.datasource.postgres.views.SalariesPostgres;
+import org.datasource.postgres.views.SalaryDetailsView;
+import org.datasource.postgres.views.SalaryDetailsViewBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.logging.Logger;
+
+
+/*	REST Service URL
+	http://localhost:8093/DSA-NoSQL-MongoDBService/rest/SalariesUkraine
+	http://localhost:8093/DSA-NoSQL-MongoDBService/rest/Cities
+	http://localhost:8093/DSA-NoSQL-MongoDBService/rest/
+*/
+@RestController @RequestMapping("/")
+public class RESTViewServiceMongoDB {
+	private static Logger logger = Logger.getLogger(RESTViewServiceMongoDB.class.getName());
+	@Autowired
+	private SalaryViewBuilder viewBuilder;
+	@Autowired
+	private SalaryDetailsViewBuilder salaryDetailsViewBuilder;
+	
+	@RequestMapping(value = "/ping", method = RequestMethod.GET,
+		produces = {MediaType.TEXT_PLAIN_VALUE})
+	@ResponseBody
+	public String pingDataSource() {
+		logger.info(">>>> org.datasource.rest.RESTViewService(JSON) is Up!");
+		return "Ping response from RESTViewServiceMongoDB!";
+	}
+	
+	@RequestMapping(value = "/SalariesUkraine", method = RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@ResponseBody
+	public List<SalaryUkraine> getSalariesUkraine() throws Exception {
+		List<SalaryUkraine> viewList = this.viewBuilder.build().getSalariesViewList();
+		return viewList;
+	}
+	
+	@RequestMapping(value = "/Cities", method = RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@ResponseBody
+	public List<String> getCities() throws Exception {
+		List<String> viewList = this.viewBuilder.build().getCitiesViewList();
+		return viewList;
+	}
+	
+	@RequestMapping(value = "/SalariesPostgres", method = RequestMethod.GET, 
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@ResponseBody
+	public List<SalaryDetailsView> getSalariesPostgres() {
+		List<SalaryDetailsView> viewList = this.salaryDetailsViewBuilder.build().getViewList();
+		return viewList;
+	}
+}

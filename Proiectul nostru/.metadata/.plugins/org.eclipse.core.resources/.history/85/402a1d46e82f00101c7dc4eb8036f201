@@ -1,0 +1,116 @@
+package org.datasource.oracle;
+
+
+import lombok.Value;
+
+@Value
+public class OracleSalaryView {
+	public Integer SalaryId;
+	public Integer CTime;
+	public String Experience;
+	public String Technology;
+	public String CLocation;
+	public String EmployeesCount;
+	public OracleSalaryView(Integer salaryId, String experience, String technology, String cLocation,
+			String employeesCount, String salaryType, String salary, Integer positionId, Integer levelId,
+			Integer wayId) {
+		super();
+		SalaryId = salaryId;
+		Experience = experience;
+		Technology = technology;
+		CLocation = cLocation;
+		EmployeesCount = employeesCount;
+		SalaryType = salaryType;
+		Salary = salary;
+		PositionId = positionId;
+		LevelId = levelId;
+		WayId = wayId;
+	}
+	public Integer getSalaryId() {
+		return SalaryId;
+	}
+	public void setSalaryId(Integer salaryId) {
+		SalaryId = salaryId;
+	}
+	public Integer getCTime() {
+		return CTime;
+	}
+	public void setCTime(Integer cTime) {
+		CTime = cTime;
+	}
+	public String getExperience() {
+		return Experience;
+	}
+	public void setExperience(String experience) {
+		Experience = experience;
+	}
+	public String getTechnology() {
+		return Technology;
+	}
+	public void setTechnology(String technology) {
+		Technology = technology;
+	}
+	public String getCLocation() {
+		return CLocation;
+	}
+	public void setCLocation(String cLocation) {
+		CLocation = cLocation;
+	}
+	public String getEmployeesCount() {
+		return EmployeesCount;
+	}
+	public void setEmployeesCount(String employeesCount) {
+		EmployeesCount = employeesCount;
+	}
+	public String getSalaryType() {
+		return SalaryType;
+	}
+	public void setSalaryType(String salaryType) {
+		SalaryType = salaryType;
+	}
+	public String getSalary() {
+		return Salary;
+	}
+	public void setSalary(String salary) {
+		Salary = salary;
+	}
+	public Integer getPositionId() {
+		return PositionId;
+	}
+	public void setPositionId(Integer positionId) {
+		PositionId = positionId;
+	}
+	public Integer getLevelId() {
+		return LevelId;
+	}
+	public void setLevelId(Integer levelId) {
+		LevelId = levelId;
+	}
+	public Integer getWayId() {
+		return WayId;
+	}
+	public void setWayId(Integer wayId) {
+		WayId = wayId;
+	}
+	public String SalaryType;
+	public String Salary;
+	public OracleSalaryView(Integer salaryId, Integer cTime, String experience, String technology, String cLocation,
+			String employeesCount, String salaryType, String salary, Integer positionId, Integer levelId,
+			Integer wayId) {
+		super();
+		SalaryId = salaryId;
+		CTime = cTime;
+		Experience = experience;
+		Technology = technology;
+		CLocation = cLocation;
+		EmployeesCount = employeesCount;
+		SalaryType = salaryType;
+		Salary = salary;
+		PositionId = positionId;
+		LevelId = levelId;
+		WayId = wayId;
+	}
+	public Integer PositionId;
+	public Integer LevelId;
+	public Integer WayId;
+}

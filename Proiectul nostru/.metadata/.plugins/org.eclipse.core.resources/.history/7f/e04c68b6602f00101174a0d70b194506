@@ -1,0 +1,32 @@
+package org.datasource.oracle;
+
+
+import org.springframework.stereotype.Service;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Properties;
+
+@Service
+public class JDBCDataSourceConnector {
+	private String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
+	// Database credentials
+	private String USER = "SYS";
+	private String PASS = "password";
+	
+	public JDBCDataSourceConnector(String dB_URL, String uSER, String pASS) {
+		super();
+		DB_URL = dB_URL;
+		USER = uSER;
+		PASS = pASS;
+	}
+
+	public Connection getConnection() throws Exception {
+		Properties props = new Properties();
+		props.setProperty("user", USER);
+		props.setProperty("password", PASS);
+
+		Connection conn = DriverManager.getConnection(DB_URL, props);
+		return conn;
+	}
+}
